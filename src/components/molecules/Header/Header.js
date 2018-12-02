@@ -8,6 +8,8 @@ import { renderModal } from './Modal';
 import { createInitFormData } from '../../../redux/form/helpers';
 import { dispatchSignInUser, dispatchLogOutUser } from '../../../redux/action/auth';
 
+import logo from '../../../assets/texte.png';
+
 import './style.scss';
 
 const formName = 'header';
@@ -82,24 +84,21 @@ class Header extends React.Component {
   render() {
     const { auth } = this.props;
     return (
-      <div>
-        <Navbar color="light" light expand="md">
-          <Link to="/">ED-TECH</Link>
+      <div className="MainContainerNavBar">
+        <Navbar style={{ backgroundColor: 'white' }} expand="md">
+          <Link to="/">
+            <img src={logo} width={100} />
+          </Link>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               {!auth.isAuthenticated ? (
-                <Button outline color="primary" onClick={this.toggleModal}>
-                  Connexion
-                </Button>
+                <span onClick={this.toggleModal}>Connexion</span>
               ) : (
                 <Button outline color="primary" onClick={this.logout}>
                   Déconnexion
                 </Button>
               )}
-              <Button outline color="primary" onClick={this.toggleModal}>
-                S'inscrire
-              </Button>
             </Nav>
           </Collapse>
         </Navbar>

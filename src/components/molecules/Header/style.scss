@@ -1,0 +1,14 @@
+
+.MainContainerNavBar {
+  height: 60px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  span {
+    color: #007bff; 
+    text-decoration: none;
+  }
+  span:hover{
+    color: #0056b3;
+  }
+}

@@ -32,9 +32,7 @@ class App extends Component {
       <ConnectedRouter history={this.props.history}>
         <div className="App">
           <Header {...this.props} />
-          <Container>
-            <Main {...this.props} />
-          </Container>
+          <Main {...this.props} />
         </div>
       </ConnectedRouter>
     );

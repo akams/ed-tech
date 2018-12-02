@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
+import {
+  Card,
+  CardImg,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  CardFooter,
+  Row,
+  Col,
+  Container,
+  Button,
+} from 'reactstrap';
+
 import logo from '../../../logo.svg';
-import '../../../App.css';
+
+import './styles.scss';
 
 class App extends Component {
   constructor(props) {
@@ -36,20 +50,37 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+        <div className="App-header-back">
+          <Container
+            style={{
+              position: 'relative',
+              paddingTop: 150,
+              paddingBottom: 86,
+            }}
           >
-            Learn React
-          </a>
-        </header>
+            <div className="first-block">
+              <h1>Des cours aux diplômes</h1>
+              <h2>
+                Formation 100 % en ligne auprès des meilleures universités et entreprises du monde
+              </h2>
+            </div>
+            <div className="second-block">
+              <button size="lg" onClick={this.toggle}>
+                Inscrivez-vous
+              </button>
+            </div>
+          </Container>
+        </div>
+        <div>
+          <Container>
+            <div>
+              <h1>Comment ca marche</h1>
+              <h2>
+                Formation 100 % en ligne auprès des meilleures universités et entreprises du monde
+              </h2>
+            </div>
+          </Container>
+        </div>
         <p className="App-intro">{this.state.apiResponse}</p>
         <p className="App-intro">{this.state.dbResponse}</p>
       </div>

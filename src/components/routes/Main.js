@@ -14,7 +14,7 @@ class Main extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/" component={CourseRoute} />
+        <Route exact path="/" component={HomeRoute} />
       </Switch>
     );
   }
