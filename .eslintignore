@@ -1,0 +1,21 @@
+# /node_modules/* and /bower_components/* ignored by default
+
+.storybook/*
+.vscode/*
+build/*
+config/*
+coverage/*
+doc/*
+docker/*
+interfaces/*
+public/*
+scripts/*
+storybook-static/*
+*/__tests__/*
+
+node_modules/*
+
+next.*.js
+tailwind.js
+postcss.*.js
+nightwatch.conf.*.js
