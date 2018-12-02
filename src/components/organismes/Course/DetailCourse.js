@@ -153,7 +153,7 @@ class DetailCourse extends Component {
                 </Card>
               </Collapse>
               <Button color="primary" onClick={this.toggleWeek} style={{ marginBottom: '1rem' }}>
-                Toggle Week
+                Voir le programme complet
               </Button>
             </div>
             <div>
