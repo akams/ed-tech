@@ -1,12 +1,15 @@
-.MainListCourse {
-  padding-top: 10%;
 
-  .ListCourse {
-    width: 75%;
-    margin-left: 5px;
-    margin-right: 5px;
-    display: inline-block;
-    border: 1px solid #cfcfcf;
+.MainContainerListCourse {
+  background-color: #F7F7F7;
+  .MainListCourse {
+    padding-top: 10%;
+    .ListCourse {
+      width: 75%;
+      margin-left: 5px;
+      margin-right: 5px;
+      display: inline-block;
+      border: 1px solid #cfcfcf;
+    }
   }
 }
 

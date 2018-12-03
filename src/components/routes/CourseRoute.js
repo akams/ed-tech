@@ -5,7 +5,7 @@ import DetailCourse from '../organismes/Course/DetailCourse';
 
 const CourseRoute = () => (
   <Switch>
-    <Route exact path="/" component={DetailCourse} />
+    <Route path="/" component={ListCourse} />
   </Switch>
 );
 

@@ -10,14 +10,21 @@ class Course extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.redirectToDetail = this.redirectToDetail.bind(this);
+  }
+
+  redirectToDetail() {
+    return this.props.history.push({
+      pathname: '/mon-programme-scolaire/detail',
+      state: {},
+    });
   }
 
   render() {
-    console.log('props', this.props);
     const { course } = this.props;
 
     return (
-      <div style={{ padding: '30px 0' }}>
+      <div style={{ padding: '30px 0' }} onClick={this.redirectToDetail}>
         <Row>
           <h2>{course.title}</h2>
         </Row>

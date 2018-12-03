@@ -1,7 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Button } from 'reactstrap';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  Nav,
+  NavItem,
+  Button,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { renderModal } from './Modal';
@@ -28,11 +39,13 @@ class Header extends React.Component {
     this.state = {
       isOpen: false,
       modal: false,
+      dropdownOpen: false,
     };
     this.toggle = this.toggle.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.onValidate = this.onValidate.bind(this);
     this.logout = this.logout.bind(this);
+    this.toggleMenuUserAuth = this.toggleMenuUserAuth.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,7 +56,7 @@ class Header extends React.Component {
           modal: false,
         });
         return this.props.history.push({
-          pathname: '/doctor',
+          pathname: '/mon-programme-scolaire',
           state: {},
         });
       }
@@ -81,6 +94,12 @@ class Header extends React.Component {
     });
   }
 
+  toggleMenuUserAuth() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
+  }
+
   render() {
     const { auth } = this.props;
     return (
@@ -95,9 +114,19 @@ class Header extends React.Component {
               {!auth.isAuthenticated ? (
                 <span onClick={this.toggleModal}>Connexion</span>
               ) : (
-                <Button outline color="primary" onClick={this.logout}>
-                  Déconnexion
-                </Button>
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleMenuUserAuth}>
+                  <DropdownToggle caret>Dropdown</DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem>Mes cours</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Mon Profil</DropdownItem>
+                    <DropdownItem>Mes facturations</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Centre d'aide</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem onClick={this.logout}>Déconnexion</DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               )}
             </Nav>
           </Collapse>

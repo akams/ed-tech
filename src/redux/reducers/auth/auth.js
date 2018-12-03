@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
         accessToken: {
           jwt: action.payload.token,
         },
-        user: decodeJwt(action.payload.token),
+        user: decodeJwt(action.payload.token) || { username: 'test' },
         status: 'authenticated',
         isAuthenticated: true,
         error: null,
