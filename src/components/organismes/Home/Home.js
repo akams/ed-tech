@@ -23,6 +23,7 @@ class App extends Component {
       apiResponse: '',
       dbResponse: '',
     };
+    this.goToSignIn = this.goToSignIn.bind(this);
   }
 
   // Execute the calls when componnent mounts
@@ -47,6 +48,13 @@ class App extends Component {
       .catch(err => err);
   }
 
+  goToSignIn() {
+    return this.props.history.push({
+      pathname: '/signin',
+      state: {},
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -60,13 +68,11 @@ class App extends Component {
           >
             <div className="first-block">
               <h1>Des cours aux diplômes</h1>
-              <h2>
-                Formation 100 % en ligne auprès des meilleures universités et entreprises du monde
-              </h2>
+              <h2>Formation 100 % en ligne</h2>
             </div>
             <div className="second-block">
-              <button size="lg" onClick={this.toggle}>
-                Inscrivez-vous
+              <button size="lg" onClick={this.goToSignIn}>
+                Inscrivez-vous maintenant
               </button>
             </div>
           </Container>
