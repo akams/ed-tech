@@ -50,7 +50,7 @@ class App extends Component {
 
   goToSignIn() {
     return this.props.history.push({
-      pathname: '/signin',
+      pathname: '/signup',
       state: {},
     });
   }

@@ -9,12 +9,18 @@ import {
   ME_FROM_TOKEN_SUCCESS,
   ME_FROM_TOKEN_FAILURE,
   LOGOUT_USER,
+  SIGNUP_USER,
+  SIGNUP_USER_FAILURE,
+  SIGNUP_USER_SUCCESS,
 } from '../reducers/auth/auth';
 const RESOURCE = '/users';
+const RESOURCE_STUDENT = '/student';
 
 const requestSignIn = payload => axios.post(ENV.apiUrl + `${RESOURCE}/login`, payload);
 const requestMeFromToken = () => axios.get(ENV.apiUrl + `${RESOURCE}/me/from/token`);
 const requestLogout = () => axios.get(ENV.apiUrl + `${RESOURCE}/logout`);
+
+const requestSignUp = payload => axios.post(ENV.apiUrl + `${RESOURCE_STUDENT}/register`, payload);
 
 function signInUser() {
   return {
@@ -56,28 +62,27 @@ function logoutUser() {
 export function dispatchSignInUser(values) {
   return (dispatch, getState) => {
     dispatch(signInUser());
-    dispatch(signInUserSuccess({}));
-    // requestSignIn(values)
-    //   .then(result => {
-    //     //Store JWT Token to browser session storage
-    //     //If you use localStorage instead of sessionStorage, then this w/ persisted across tabs and new windows.
-    //     // sessionStorage = persisted only in current tab
-    //     sessionStorage.setItem('jwtToken', result.data.token);
-    //     //let other components know that everything is fine by updating the redux` state
-    //     console.warn('state before: ', getState());
-    //     dispatch(signInUserSuccess(result.data)); //ps: this is same as dispatching RESET_USER_FIELDS
-    //     axios.defaults.headers = {
-    //       ...axios.defaults.headers,
-    //       ...getHeaders(result.data.token),
-    //     };
-    //     console.warn('state after: ', getState());
-    //   })
-    //   .catch(error => {
-    //     console.warn({ error });
-    //     console.warn('state before: ', getState());
-    //     dispatch(signInUserFailure(error));
-    //     console.warn('state after: ', getState());
-    //   });
+    requestSignIn(values)
+      .then(result => {
+        //Store JWT Token to browser session storage
+        //If you use localStorage instead of sessionStorage, then this w/ persisted across tabs and new windows.
+        // sessionStorage = persisted only in current tab
+        sessionStorage.setItem('jwtToken', result.data.token);
+        //let other components know that everything is fine by updating the redux` state
+        console.warn('state before: ', getState());
+        dispatch(signInUserSuccess(result.data)); //ps: this is same as dispatching RESET_USER_FIELDS
+        axios.defaults.headers = {
+          ...axios.defaults.headers,
+          ...getHeaders(result.data.token),
+        };
+        console.warn('state after: ', getState());
+      })
+      .catch(error => {
+        console.warn({ error });
+        console.warn('state before: ', getState());
+        dispatch(signInUserFailure(error));
+        console.warn('state after: ', getState());
+      });
   };
 }
 
@@ -108,5 +113,11 @@ export function dispatchLogOutUser() {
       dispatch(logoutUser());
       console.warn('state after: ', getState());
     });
+  };
+}
+
+export function dispatchSignUpStudent(values) {
+  return (dispatch, getState) => {
+    return requestSignUp(values);
   };
 }
