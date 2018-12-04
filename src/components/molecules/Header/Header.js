@@ -28,7 +28,8 @@ export const initFormData = createInitFormData(formName);
 
 const formToAPi = data => {
   return {
-    email: data.username,
+    studentUid: data.idAccount,
+    username: data.username,
     password: data.password,
   };
 };
@@ -46,6 +47,7 @@ class Header extends React.Component {
     this.onValidate = this.onValidate.bind(this);
     this.logout = this.logout.bind(this);
     this.toggleMenuUserAuth = this.toggleMenuUserAuth.bind(this);
+    this.goTo = this.goTo.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,6 +102,13 @@ class Header extends React.Component {
     }));
   }
 
+  goTo(url) {
+    return this.props.history.push({
+      pathname: url,
+      state: {},
+    });
+  }
+
   render() {
     const { auth } = this.props;
     return (
@@ -117,7 +126,9 @@ class Header extends React.Component {
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleMenuUserAuth}>
                   <DropdownToggle caret>Dropdown</DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>Mes cours</DropdownItem>
+                    <DropdownItem onClick={() => this.goTo('/mon-programme-scolaire')}>
+                      Mes cours
+                    </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem>Mon Profil</DropdownItem>
                     <DropdownItem>Mes facturations</DropdownItem>

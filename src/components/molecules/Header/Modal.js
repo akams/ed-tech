@@ -16,6 +16,15 @@ export const renderModal = (
         <Form onSubmit={handleSubmitFunction(onValidateFunction)}>
           <FormGroup>
             <Field
+              name="idAccount"
+              type="text"
+              label="Identifiant compte"
+              placeholder="Identifiant compte"
+              component={renderInputReduxForm}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Field
               name="username"
               type="text"
               label="Identifiant"
@@ -33,12 +42,7 @@ export const renderModal = (
               component={renderInputReduxForm}
             />
           </FormGroup>
-          <FormGroup check>
-            <Label check>
-              <Input type="checkbox" /> Check me out
-            </Label>
-          </FormGroup>
-          <Button>Submit</Button>
+          <Button>Envoyer</Button>
         </Form>
       </ModalBody>
     </Modal>

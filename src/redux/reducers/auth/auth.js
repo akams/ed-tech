@@ -9,11 +9,6 @@ export const SIGNIN_USER_FAILURE = 'SIGNIN_USER_FAILURE';
 export const ME_FROM_TOKEN_SUCCESS = 'ME_FROM_TOKEN_SUCCESS';
 export const ME_FROM_TOKEN_FAILURE = 'ME_FROM_TOKEN_FAILURE';
 
-// SignUp
-export const SIGNUP_USER = 'SIGNUP_USER';
-export const SIGNUP_USER_SUCCESS = 'SIGNUP_USER_SUCCESS';
-export const SIGNUP_USER_FAILURE = 'SIGNUP_USER_FAILURE';
-
 //log out user
 export const LOGOUT_USER = 'LOGOUT_USER';
 
@@ -28,16 +23,6 @@ const initialState = {
 export default (state = initialState, action) => {
   let error;
   switch (action.type) {
-    // SIGNUP
-    case SIGNUP_USER:
-      console.warn('signup user from signup: ', { action });
-      return { ...state, status: 'signup', loading: true };
-    case SIGNUP_USER_SUCCESS:
-      console.warn('signup user from signup: ', { action });
-      return { ...state, status: 'signup_success', error: null, loading: false };
-    case SIGNUP_USER_FAILURE:
-      console.warn('signup user from signup: ', { action });
-      return { ...state, status: 'signup_failure', error: null, loading: false };
     // SIGNIN
     case SIGNIN_USER:
       console.warn('signin user from signIn: ', { action });
@@ -95,6 +80,9 @@ export default (state = initialState, action) => {
     case LOGOUT_USER:
       return {
         ...state,
+        accessToken: {
+          jwt: action.payload.token,
+        },
         user: null,
         status: 'logout',
         error: null,

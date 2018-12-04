@@ -9,16 +9,12 @@ import {
   ME_FROM_TOKEN_SUCCESS,
   ME_FROM_TOKEN_FAILURE,
   LOGOUT_USER,
-  SIGNUP_USER,
-  SIGNUP_USER_FAILURE,
-  SIGNUP_USER_SUCCESS,
 } from '../reducers/auth/auth';
-const RESOURCE = '/users';
 const RESOURCE_STUDENT = '/student';
 
-const requestSignIn = payload => axios.post(ENV.apiUrl + `${RESOURCE}/login`, payload);
-const requestMeFromToken = () => axios.get(ENV.apiUrl + `${RESOURCE}/me/from/token`);
-const requestLogout = () => axios.get(ENV.apiUrl + `${RESOURCE}/logout`);
+const requestSignIn = payload => axios.post(ENV.apiUrl + `${RESOURCE_STUDENT}/login`, payload);
+const requestMeFromToken = () => axios.get(ENV.apiUrl + `${RESOURCE_STUDENT}/me/from/token`);
+const requestLogout = () => axios.get(ENV.apiUrl + `${RESOURCE_STUDENT}/logout`);
 
 const requestSignUp = payload => axios.post(ENV.apiUrl + `${RESOURCE_STUDENT}/register`, payload);
 
@@ -53,9 +49,10 @@ function meFromTokenFailure(error) {
   };
 }
 
-function logoutUser() {
+function logoutUser(currentUser) {
   return {
     type: LOGOUT_USER,
+    payload: currentUser,
   };
 }
 
@@ -107,10 +104,10 @@ export function dispatchMeFromToken() {
 export function dispatchLogOutUser() {
   return (dispatch, getState) => {
     console.warn('state before: ', getState());
-    requestLogout().then(() => {
+    requestLogout().then(response => {
       sessionStorage.removeItem('jwtToken');
       console.warn('state before: ', getState());
-      dispatch(logoutUser());
+      dispatch(logoutUser(response.data));
       console.warn('state after: ', getState());
     });
   };
