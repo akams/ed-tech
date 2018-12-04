@@ -18,7 +18,6 @@ class Main extends React.Component {
       <Switch>
         <Route exact path="/" component={HomeRoute} />
         <Route path="/signup" component={SignUpRoute} />
-
         <Route exact path="/mon-programme-scolaire" component={CourseRoute} />
         <Route exact path="/mon-programme-scolaire/detail" component={DetailCourse} />
       </Switch>

@@ -5,6 +5,7 @@ import { reduxForm } from 'redux-form';
 
 import { createInitFormData } from '../../../redux/form/helpers';
 import SignUpMlc from '../../molecules/SignUp/SignUp';
+import SuccessSignUp from './SuccessSignUp/SuccessSignUp';
 
 import { dispatchSignUpStudent } from '../../../redux/action/auth';
 
@@ -23,7 +24,9 @@ const formToAPi = data => {
 class SignUp extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      success: false,
+    };
     this.onValidate = this.onValidate.bind(this);
   }
 
@@ -36,6 +39,7 @@ class SignUp extends Component {
       .dispatchSignUpUserFunction(data)
       .then(result => {
         console.log(result);
+        this.setState({ success: true });
       })
       .catch(e => console.error(e));
   }
@@ -44,7 +48,10 @@ class SignUp extends Component {
     return (
       <div className="MainSignUp">
         <Container>
-          <SignUpMlc onValidateFunction={this.onValidate} {...this.props} />
+          {!this.state.success && (
+            <SignUpMlc onValidateFunction={this.onValidate} {...this.props} />
+          )}
+          {this.state.success && <SuccessSignUp />}
         </Container>
       </div>
     );

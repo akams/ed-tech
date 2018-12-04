@@ -160,11 +160,6 @@ class SignUp extends Component {
               component={renderInputReduxForm}
             />
           </FormGroup>
-          <FormGroup check>
-            <Label check>
-              <Input type="checkbox" /> Check me out
-            </Label>
-          </FormGroup>
           <Button>Submit</Button>
         </Form>
       </div>
