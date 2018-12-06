@@ -8,6 +8,7 @@ import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 
 import Header from './components/molecules/Header/Header';
+import Footer from './components/molecules/Footer/Footer';
 import Main from './components/routes/Main';
 import rootReducer from './redux/reducers';
 
@@ -33,6 +34,7 @@ class App extends Component {
         <div className="App">
           <Header {...this.props} />
           <Main {...this.props} />
+          <Footer {...this.props} />
         </div>
       </ConnectedRouter>
     );

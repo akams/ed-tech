@@ -7,11 +7,18 @@ export const renderModal = (
   modal,
   toggleModalFunction,
   handleSubmitFunction,
-  onValidateFunction
+  onValidateFunction,
+  changeAccess,
+  updateAccessUserFunction
 ) => {
   return (
     <Modal isOpen={modal} toggle={toggleModalFunction}>
-      <ModalHeader toggle={toggleModalFunction}>Connexion</ModalHeader>
+      <ModalHeader toggle={toggleModalFunction}>
+        Connexion
+        <Button onClick={() => updateAccessUserFunction()}>
+          {!changeAccess ? 'Accès enseignant' : 'Accès étudiant'}
+        </Button>
+      </ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmitFunction(onValidateFunction)}>
           <FormGroup>

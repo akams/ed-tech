@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { renderModal } from './Modal';
 import { createInitFormData } from '../../../redux/form/helpers';
 import { dispatchSignInUser, dispatchLogOutUser } from '../../../redux/action/auth';
+import { dispatchSignInTeacher, dispatchLogOutUserTeacher } from '../../../redux/action/user';
 
 import logo from '../../../assets/texte.png';
 
@@ -28,7 +29,7 @@ export const initFormData = createInitFormData(formName);
 
 const formToAPi = data => {
   return {
-    studentUid: data.idAccount,
+    idAccount: data.idAccount,
     username: data.username,
     password: data.password,
   };
@@ -41,6 +42,7 @@ class Header extends React.Component {
       isOpen: false,
       modal: false,
       dropdownOpen: false,
+      changeAccess: false, // default on student
     };
     this.toggle = this.toggle.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
@@ -48,6 +50,7 @@ class Header extends React.Component {
     this.logout = this.logout.bind(this);
     this.toggleMenuUserAuth = this.toggleMenuUserAuth.bind(this);
     this.goTo = this.goTo.bind(this);
+    this.updateAccessUser = this.updateAccessUser.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,10 +60,18 @@ class Header extends React.Component {
         this.setState({
           modal: false,
         });
-        return this.props.history.push({
-          pathname: '/mon-programme-scolaire',
-          state: {},
-        });
+        if (nextProps.auth.user.isStudent) {
+          return this.props.history.push({
+            pathname: '/mon-programme-scolaire',
+            state: {},
+          });
+        }
+        if (nextProps.auth.user.isTeacher) {
+          return this.props.history.push({
+            pathname: '/compte-enseignant',
+            state: {},
+          });
+        }
       }
     }
     //error
@@ -77,11 +88,19 @@ class Header extends React.Component {
   }
 
   async onValidate(data) {
-    this.props.dispatchSignInUserFunction(formToAPi(data));
+    if (this.state.changeAccess) {
+      // teacher
+      return this.props.dispatchSignInTeacherFunction(formToAPi(data));
+    }
+    return this.props.dispatchSignInUserFunction(formToAPi(data));
   }
 
   logout() {
-    this.props.dispatchLogOutUserFunction();
+    const { user } = this.props.auth;
+    if (user.isStudent) {
+      return this.props.dispatchLogOutUserFunction();
+    }
+    return this.props.dispatchLogOutUserTeacherFunction();
   }
 
   toggle() {
@@ -106,6 +125,12 @@ class Header extends React.Component {
     return this.props.history.push({
       pathname: url,
       state: {},
+    });
+  }
+
+  updateAccessUser() {
+    this.setState({
+      changeAccess: !this.state.changeAccess,
     });
   }
 
@@ -142,7 +167,14 @@ class Header extends React.Component {
             </Nav>
           </Collapse>
         </Navbar>
-        {renderModal(this.state.modal, this.toggleModal, this.props.handleSubmit, this.onValidate)}
+        {renderModal(
+          this.state.modal,
+          this.toggleModal,
+          this.props.handleSubmit,
+          this.onValidate,
+          this.state.changeAccess,
+          this.updateAccessUser
+        )}
       </div>
     );
   }
@@ -150,7 +182,9 @@ class Header extends React.Component {
 
 const mapDispatchToProps = {
   dispatchSignInUserFunction: user => dispatchSignInUser(user),
+  dispatchSignInTeacherFunction: user => dispatchSignInTeacher(user),
   dispatchLogOutUserFunction: () => dispatchLogOutUser(),
+  dispatchLogOutUserTeacherFunction: () => dispatchLogOutUserTeacher(),
 };
 
 const mapStateToProps = state => ({
