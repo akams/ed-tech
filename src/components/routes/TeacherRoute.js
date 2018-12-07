@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 
 // COMPONENTS
-import AddCourse from '../organismes/Teacher/AddCourse';
+import AddCourse from '../organismes/Teacher/AddCourse/AddCourse';
 
 import './style/style.scss';
 
