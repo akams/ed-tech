@@ -8,6 +8,7 @@ import HomeRoute from './HomeRoute';
 import SignUpRoute from './SignUpRoute';
 import PrivateRoute from './PrivateRoute';
 import StudentRoute from './StudentRoute';
+import TeacherRoute from './TeacherRoute';
 
 // COMPONENTS
 import SignUpTeacher from '../organismes/SignUp/SignUpTeacher';
@@ -77,15 +78,15 @@ class Main extends React.Component {
           )}
 
         {/** Login teacher */}
-        {/* {!!user &&
+        {!!user &&
           user.isTeacher && (
             <PrivateRoute
               exact
-              path="/compte-enseignant"
-              component={AddCourse}
+              path="/enseignant/compte-enseignant"
+              component={TeacherRoute}
               auth={this.props.auth}
             />
-          )} */}
+          )}
 
         {/** User Disconnect go to home */}
         {!!user === false && (
