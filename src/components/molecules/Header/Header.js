@@ -62,7 +62,7 @@ class Header extends React.Component {
         });
         if (nextProps.auth.user.isStudent) {
           return this.props.history.push({
-            pathname: '/mon-programme-scolaire',
+            pathname: '/etudiant/mon-programme-scolaire',
             state: {},
           });
         }
@@ -136,6 +136,41 @@ class Header extends React.Component {
 
   render() {
     const { auth } = this.props;
+    let componentDropdown = (
+      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleMenuUserAuth}>
+        <DropdownToggle caret>Dropdown</DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem onClick={() => this.goTo('/etudiant/mon-programme-scolaire')}>
+            Mes cours
+          </DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>Mon Profil</DropdownItem>
+          <DropdownItem>Mes facturations</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>Centre d'aide</DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem onClick={this.logout}>Déconnexion</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    );
+    if (!!auth.user === true && auth.user.isTeacher) {
+      componentDropdown = (
+        <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleMenuUserAuth}>
+          <DropdownToggle caret>Dropdown</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={() => this.goTo('/compte-enseignant')}>Mon compte</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem>Mon Profil</DropdownItem>
+            <DropdownItem>Mes facturations</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem>Centre d'aide</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem onClick={this.logout}>Déconnexion</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      );
+    }
+
     return (
       <div className="MainContainerNavBar">
         <Navbar style={{ backgroundColor: 'white' }} expand="md">
@@ -148,21 +183,7 @@ class Header extends React.Component {
               {!auth.isAuthenticated ? (
                 <span onClick={this.toggleModal}>Connexion</span>
               ) : (
-                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleMenuUserAuth}>
-                  <DropdownToggle caret>Dropdown</DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem onClick={() => this.goTo('/mon-programme-scolaire')}>
-                      Mes cours
-                    </DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>Mon Profil</DropdownItem>
-                    <DropdownItem>Mes facturations</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>Centre d'aide</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem onClick={this.logout}>Déconnexion</DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                componentDropdown
               )}
             </Nav>
           </Collapse>

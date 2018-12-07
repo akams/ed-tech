@@ -5,12 +5,11 @@ import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 
 // ROUTES
 import HomeRoute from './HomeRoute';
-import CourseRoute from './CourseRoute';
 import SignUpRoute from './SignUpRoute';
 import PrivateRoute from './PrivateRoute';
+import StudentRoute from './StudentRoute';
 
 // COMPONENTS
-import DetailCourse from '../organismes/Course/DetailCourse';
 import SignUpTeacher from '../organismes/SignUp/SignUpTeacher';
 
 import getHeaders from '../../constants/HeadersApi';
@@ -61,47 +60,32 @@ class Main extends React.Component {
 
   render() {
     const { user } = this.props.auth;
-    const ComponentTest = () => (
-      <div style={{ padding: '70px 0' }}>
-        <h1>Mon composent test</h1>
-      </div>
-    );
-    console.log({ user });
     return (
       <Switch>
         <Route exact path="/" component={HomeRoute} />
         <Route path="/signup" component={SignUpRoute} />
         <Route exact path="/devenir-enseignant" component={SignUpTeacher} />
-        {/** Login Student */}
+        {/** Student */}
         {!!user &&
           user.isStudent && (
             <PrivateRoute
               exact
-              path="/mon-programme-scolaire"
-              component={CourseRoute}
-              auth={this.props.auth}
-            />
-          )}
-        {!!user &&
-          user.isStudent && (
-            <PrivateRoute
-              exact
-              path="/mon-programme-scolaire/detail"
-              component={DetailCourse}
+              path="/etudiant/mon-programme-scolaire"
+              component={StudentRoute}
               auth={this.props.auth}
             />
           )}
 
         {/** Login teacher */}
-        {!!user &&
+        {/* {!!user &&
           user.isTeacher && (
             <PrivateRoute
               exact
               path="/compte-enseignant"
-              component={ComponentTest}
+              component={AddCourse}
               auth={this.props.auth}
             />
-          )}
+          )} */}
 
         {/** User Disconnect go to home */}
         {!!user === false && (
