@@ -23,7 +23,10 @@ import './style/style.scss';
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loaderUi: true,
+    };
+    this.loadUserFromToken = this.loadUserFromToken.bind(this);
   }
 
   componentWillMount() {
@@ -45,6 +48,9 @@ class Main extends React.Component {
     let token = sessionStorage.getItem('jwtToken');
     if (!token || token === '') {
       //if there is no token, dont bother
+      this.setState({
+        loaderUi: false,
+      });
       return;
     }
     axios.defaults.headers = {
@@ -53,57 +59,85 @@ class Main extends React.Component {
     };
     const user = decodeJwt(token);
     if (!!user && user.isStudent) {
-      return this.props.dispatchMeFromTokenFunction();
+      return this.props
+        .dispatchMeFromTokenFunction()
+        .then(() => {
+          this.setState({
+            loaderUi: false,
+          });
+        })
+        .catch(err => {
+          console.error({ err });
+          this.setState({
+            loaderUi: false,
+          });
+        });
     } else if (!!user && user.isTeacher) {
-      return this.props.dispatchMeFromTokenTeacherFunction();
+      return this.props
+        .dispatchMeFromTokenTeacherFunction()
+        .then(() => {
+          this.setState({
+            loaderUi: false,
+          });
+        })
+        .catch(err => {
+          this.setState({
+            loaderUi: false,
+          });
+          console.error({ err });
+        });
     }
   }
 
   render() {
     const { user } = this.props.auth;
     return (
-      <Switch>
-        <Route exact path="/" component={HomeRoute} />
-        <Route path="/signup" component={SignUpRoute} />
-        <Route exact path="/devenir-enseignant" component={SignUpTeacher} />
-        {/** Student */}
-        {!!user &&
-          user.isStudent && (
-            <PrivateRoute
-              exact
-              path="/etudiant/mon-programme-scolaire"
-              component={StudentRoute}
-              auth={this.props.auth}
-            />
-          )}
-
-        {/** Login teacher */}
-        {!!user &&
-          user.isTeacher && (
-            <PrivateRoute
-              exact
-              path="/enseignant/compte-enseignant"
-              component={TeacherRoute}
-              auth={this.props.auth}
-            />
-          )}
-
-        {/** User Disconnect go to home */}
-        {!!user === false && (
-          <Route
-            render={props => (
-              <Redirect
-                push
-                to={{
-                  pathname: '/',
-                  state: { from: props.location },
-                }}
-              />
-            )}
-          />
+      <div>
+        {this.state.loaderUi && (
+          <div className="MainGlobalContainer row">
+            <div className="loader-ui" />
+          </div>
         )}
-        {/* <Route exact path="/mon-programme-scolaire/detail" component={DetailCourse} /> */}
-      </Switch>
+
+        <Switch>
+          <Route exact path="/" component={HomeRoute} />
+          <Route path="/signup" component={SignUpRoute} />
+          <Route exact path="/devenir-enseignant" component={SignUpTeacher} />
+          {/** Student */}
+          <PrivateRoute
+            exact
+            path="/etudiant/mon-programme-scolaire"
+            component={StudentRoute}
+            auth={this.props.auth}
+            loaderPage={this.state.loaderUi}
+            loadUserFromTokenFunction={this.loadUserFromToken}
+          />
+          {/** Teacher */}
+          <PrivateRoute
+            exact
+            path="/enseignant/compte-enseignant"
+            component={TeacherRoute}
+            auth={this.props.auth}
+            loaderPage={this.state.loaderUi}
+            loadUserFromTokenFunction={this.loadUserFromToken}
+          />
+          {/** User Disconnect go to home */}
+          {!!user === false && (
+            <Route
+              render={props => (
+                <Redirect
+                  push
+                  to={{
+                    pathname: '/',
+                    state: { from: props.location },
+                  }}
+                />
+              )}
+            />
+          )}
+          {/* <Route exact path="/mon-programme-scolaire/detail" component={DetailCourse} /> */}
+        </Switch>
+      </div>
     );
   }
 }

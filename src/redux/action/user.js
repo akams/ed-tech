@@ -88,12 +88,13 @@ export function dispatchSignInTeacher(values) {
 
 export function dispatchMeFromTokenTeacher() {
   return (dispatch, getState) => {
-    requestMeFromToken()
+    return requestMeFromToken()
       .then(response => {
         sessionStorage.setItem('jwtToken', response.data.token);
         console.warn('state before: ', getState());
         dispatch(meFromTokenSuccess(response.data));
         console.warn('state after: ', getState());
+        return response;
       })
       .catch(error => {
         sessionStorage.removeItem('jwtToken'); //remove token from storage

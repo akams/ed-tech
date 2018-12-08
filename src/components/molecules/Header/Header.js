@@ -98,9 +98,14 @@ class Header extends React.Component {
   logout() {
     const { user } = this.props.auth;
     if (user.isStudent) {
-      return this.props.dispatchLogOutUserFunction();
+      this.props.dispatchLogOutUserFunction();
+    } else if (user.isTeacher) {
+      this.props.dispatchLogOutUserTeacherFunction();
     }
-    return this.props.dispatchLogOutUserTeacherFunction();
+    return this.props.history.push({
+      pathname: '/',
+      state: {},
+    });
   }
 
   toggle() {

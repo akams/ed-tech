@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 
 // COMPONENTS
+import Sidebar from '../molecules/Sidebar/Sidebar';
 import AddCourse from '../organismes/Teacher/AddCourse/AddCourse';
 
 import './style/style.scss';
@@ -17,7 +18,7 @@ class TeacherRouter extends React.Component {
       <div>
         <div className="container-fluid">
           <div className="row">
-            {/* <Sidebar/> */}
+            <Sidebar />
             <main
               role="main"
               className="col-md-9 ml-sm-auto col-lg-10 px-4"
