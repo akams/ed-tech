@@ -113,9 +113,9 @@ class Main extends React.Component {
             loadUserFromTokenFunction={this.loadUserFromToken}
           />
           {/** Teacher */}
+          {/* <Route path="/enseignant" component={TeacherRoute} /> */}
           <PrivateRoute
-            exact
-            path="/enseignant/compte-enseignant"
+            path="/enseignant"
             component={TeacherRoute}
             auth={this.props.auth}
             loaderPage={this.state.loaderUi}

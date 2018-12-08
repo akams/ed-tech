@@ -3,6 +3,7 @@ import { Switch, Route, withRouter, Redirect } from 'react-router-dom';
 
 // COMPONENTS
 import Sidebar from '../molecules/Sidebar/Sidebar';
+import TeacherDefault from '../organismes/Teacher/Teacher';
 import AddCourse from '../organismes/Teacher/AddCourse/AddCourse';
 
 import './style/style.scss';
@@ -25,7 +26,9 @@ class TeacherRouter extends React.Component {
               style={{ marginTop: 10 }}
             >
               <Switch>
-                <Route exact path="/enseignant/compte-enseignant" component={AddCourse} />
+                <Route exact path="/enseignant/" component={TeacherDefault} />
+                <Route exact path="/enseignant/compte-enseignant" component={TeacherDefault} />
+                <Route exact path="/enseignant/ajouter-un-cours" component={AddCourse} />
                 {/* NoMatch component:
                     <Route component={NoMatch} />*/}
               </Switch>

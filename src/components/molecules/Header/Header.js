@@ -163,9 +163,7 @@ class Header extends React.Component {
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleMenuUserAuth}>
           <DropdownToggle caret>Dropdown</DropdownToggle>
           <DropdownMenu>
-            <DropdownItem onClick={() => this.goTo('/enseignant/compte-enseignant')}>
-              Mon compte
-            </DropdownItem>
+            <DropdownItem onClick={() => this.goTo('/enseignant')}>Mon compte</DropdownItem>
             <DropdownItem divider />
             <DropdownItem>Mon Profil</DropdownItem>
             <DropdownItem>Mes facturations</DropdownItem>

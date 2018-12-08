@@ -34,7 +34,7 @@ class AddCourse extends Component {
         <Container>
           <Row>
             <Col sm="12" md={{ size: 6, offset: 3 }}>
-              add courrrrrse
+              .col-sm-12 .col-md-6 .offset-md-3
             </Col>
           </Row>
         </Container>
