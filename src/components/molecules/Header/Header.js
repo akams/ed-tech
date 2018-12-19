@@ -25,7 +25,7 @@ import logo from '../../../assets/texte.png';
 import './style.scss';
 
 const formName = 'header';
-export const initFormData = createInitFormData(formName);
+const initFormData = createInitFormData(formName);
 
 const formToAPi = data => {
   return {
@@ -90,7 +90,14 @@ class Header extends React.Component {
   async onValidate(data) {
     if (this.state.changeAccess) {
       // teacher
-      return this.props.dispatchSignInTeacherFunction(formToAPi(data));
+      return this.props
+        .dispatchSignInTeacherFunction(formToAPi(data))
+        .then(() => {
+          this.props.destroy();
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
     return this.props.dispatchSignInUserFunction(formToAPi(data));
   }

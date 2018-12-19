@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'filepond/dist/filepond.min.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import './index.css';
 
 ReactDOM.render(

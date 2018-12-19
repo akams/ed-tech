@@ -113,7 +113,6 @@ class Main extends React.Component {
             loadUserFromTokenFunction={this.loadUserFromToken}
           />
           {/** Teacher */}
-          {/* <Route path="/enseignant" component={TeacherRoute} /> */}
           <PrivateRoute
             path="/enseignant"
             component={TeacherRoute}

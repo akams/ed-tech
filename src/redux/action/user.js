@@ -62,7 +62,7 @@ export function dispatchSignUpTeacher(values) {
 export function dispatchSignInTeacher(values) {
   return (dispatch, getState) => {
     dispatch(signInUser());
-    requestSignIn(values)
+    return requestSignIn(values)
       .then(result => {
         //Store JWT Token to browser session storage
         //If you use localStorage instead of sessionStorage, then this w/ persisted across tabs and new windows.
@@ -76,12 +76,14 @@ export function dispatchSignInTeacher(values) {
           ...getHeaders(result.data.token),
         };
         console.warn('state after: ', getState());
+        return result;
       })
       .catch(error => {
         console.warn({ error });
         console.warn('state before: ', getState());
         dispatch(signInUserFailure(error));
         console.warn('state after: ', getState());
+        return error;
       });
   };
 }
